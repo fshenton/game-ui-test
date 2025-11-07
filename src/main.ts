@@ -1,9 +1,13 @@
 import './style.css';
+import { render } from './ui';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <h1>Hello World</h1>
-  </div>
-`
+// Initialize and render
+render();
 
+// Hot Module Replacement (for development)
+if (import.meta.hot) {
+  import.meta.hot.accept(); // TODO test this
+}
+  
 
+// TODO div id=app = full screen and background image

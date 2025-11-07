@@ -10,7 +10,6 @@ export interface Character {
     id: string,
     name: string,
     class: CharacterClass,
-    portraitPath: string,
     level: number,
 }
 
