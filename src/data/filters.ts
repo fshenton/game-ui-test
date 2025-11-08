@@ -6,19 +6,19 @@ export const FILTERS: Filter[] = [
             name: "All",
         },
         {
-            id: "assassin",
-            name: "Assassin",
-        },
-        {
-            id: "brawler",
-            name: "Brawler",
-        },
-        {
             id: "support",
             name: "Support",
         },
         {
             id: "tank",
             name: "Tank",
+        },
+        {
+            id: "brawler",
+            name: "Brawler",
+        },
+        {
+            id: "assassin",
+            name: "Assassin",
         },
     ];

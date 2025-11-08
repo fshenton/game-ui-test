@@ -15,6 +15,26 @@ export function render(): void {
 
 }
 
+function createHeading(): HTMLDivElement {
+    const headingContainer = document.createElement("div");
+    headingContainer.id = "headingContainer";
+
+    const heading = document.createElement("h1"); 
+    heading.innerText = "CHARACTERS";
+
+    headingContainer.appendChild(heading);
+
+    return headingContainer;
+}
+
+function createScreenDivider(): HTMLImageElement {
+    const screenDivider = document.createElement("img");
+    screenDivider.className = "screenDivider";
+    screenDivider.src = "./assets/images/screen layers/screen divider.png";
+
+    return screenDivider;
+}
+
 export function createMainContainer(): HTMLElement {
     const mainContainer = document.createElement("main");
 
@@ -26,10 +46,10 @@ export function createMainContainer(): HTMLElement {
 
 function createControlSection(): HTMLDivElement {
     const controlSection = document.createElement("div");
-    controlSection.className = "controlSection";
+    controlSection.id = "controlSection";
 
     const filterList = document.createElement("ul");
-    filterList.className = "filterList";
+    filterList.id = "filterList";
 
     createFilters().forEach(filter => filterList.appendChild(filter));
 
@@ -54,10 +74,11 @@ function createFilters(): HTMLLIElement[] {
         button.setAttribute("data-filter-id", id);
 
         const icon = document.createElement("img");
-        icon.classList.add("icon");
+        icon.className = "icon";
         icon.src = `./assets/images/icons/${id}.png`;
         
         const buttonLabel = document.createElement("div");
+        buttonLabel.className = "name";
         buttonLabel.innerText = name;
 
         button.appendChild(icon);
@@ -73,9 +94,11 @@ function createFilters(): HTMLLIElement[] {
 
 function createLockedToggle(): HTMLDivElement {
     const lockedToggleWrapper = document.createElement("div");
-    lockedToggleWrapper.className = "lockedToggleWrapper";
+    lockedToggleWrapper.id = "lockedToggleWrapper";
 
     // TODO confirm that background-image transitions are ok to use, else include the img elements
+    // Either we have two images: one for locked and one for unlocked and we switch opacitys
+    // Or we have an empty div that we change the background-image for
     const toggle = document.createElement("input");
     toggle.type = "checkbox";
     toggle.id = "lockedToggle";
@@ -97,7 +120,7 @@ function createLockedToggle(): HTMLDivElement {
 
 function createCharacterSection(): HTMLDivElement {
     const characterSection = document.createElement("div");
-    characterSection.className = "characterSection"
+    characterSection.id = "characterSection"
 
     const characterPanels = createCharacterPanels();
     characterPanels.forEach(panel => characterSection.appendChild(panel));
@@ -110,37 +133,41 @@ function createCharacterPanels(): HTMLDivElement[] {
         const { id, name, class: characterClass, level } = character;
 
         const panel = document.createElement("div");
-        panel.className = "charPanel";
+        panel.className = "character";
         panel.setAttribute("data-character-id", id);
         panel.setAttribute("role", "button");
         panel.setAttribute("tabindex", "0");
 
         const charPortrait = document.createElement("img");
-        charPortrait.className = "charPortrait"
+        charPortrait.className = "portrait"
         charPortrait.src = `./assets/images/character/portraits/${id}.png`;
         
         const charFgLayer = document.createElement("img");
-        charFgLayer.className = "charForegroundLayer";
+        charFgLayer.className = "foregroundLayer";
         charFgLayer.src = `./assets/images/character/fgInactive.png`; // TODO Active, Inactive, Locked, Unlocked depending on state
 
+        const textContainer = document.createElement("div");
+        textContainer.className = "textContainer";
+        
         const charName = document.createElement("div");
-        charName.className = "charName"
+        charName.className = "name"
         charName.innerText = name;
 
         const charLevel = document.createElement("div");
-        charLevel.className = "charLevel"
+        charLevel.className = "level"
         charLevel.innerText = `${level}/ 15`;
+
+        textContainer.appendChild(charName);
+        textContainer.appendChild(charLevel);
         
         const classIcon = document.createElement("img");
-        classIcon.className = "charClassIcon";
+        classIcon.className = "classIcon";
         classIcon.src = `./assets/images/icons/${characterClass}.png`;
-        
         // TODO confirm that background-image transitions are ok to use, else include the img elements
 
         panel.appendChild(charPortrait); 
         panel.appendChild(charFgLayer);
-        panel.appendChild(charName);
-        panel.appendChild(charLevel);
+        panel.appendChild(textContainer);
         panel.appendChild(classIcon);
 
         return panel;
@@ -148,25 +175,6 @@ function createCharacterPanels(): HTMLDivElement[] {
     })
 
     return characterPanels;
-}
-
-function createHeading(): HTMLDivElement {
-    const headingContainer = document.createElement("div");
-    headingContainer.className = "headingContainer";
-
-    const heading = document.createElement("h1"); 
-    heading.innerText = "CHARACTERS";
-
-    headingContainer.appendChild(heading);
-
-    return headingContainer;
-}
-
-function createScreenDivider(): HTMLImageElement {
-    const screenDivider = document.createElement("img");
-    screenDivider.src = "./assets/images/screen layers/screen divider.png";
-
-    return screenDivider;
 }
 
 function createFooter(): HTMLElement {

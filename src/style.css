@@ -1,1 +1,179 @@
+:root {
+    /* --font_family__body: 
+    --font_family__heading:  */
+    /* --font_color: #cacbca; */
+}
 
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+        background-color: transparent;
+    }
+}
+
+html {
+    font-size: 20px;
+}
+
+#app {
+    background-color: grey;
+    min-height: 100vh;
+    padding-top: 5rem;
+
+    #headingContainer {
+        padding-left: 4rem;
+        margin-bottom: 1.5rem;
+        width: 18.5rem;
+        h1 { 
+            font-size: 2.5rem;
+        }
+    }
+
+    main { 
+        padding-left: 4rem;
+        display: flex;
+        gap: 3.725rem;
+        height: 39.5rem;
+
+        /* CONTROLS */
+        #controlSection {
+            display: flex;
+            flex-direction: column;
+
+            #filterList {
+                padding-top: 0.25rem;
+                width: 16.65rem;
+                margin-bottom: 19.75rem;
+
+                li {
+                    list-style: none;
+                    width: 100%;
+                    height: 2.7rem;
+
+                    + li {
+                        margin-top: 0.8rem;
+                    }
+
+                    button {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        position: relative;
+                        align-items: center;
+                        background-color: pink;
+                    }
+                    .icon {
+                        width: 1.6rem;
+                        height: 1.6rem;
+                        left: 1.375rem;
+                        position: relative;
+                    }
+                    .name {
+                        position: relative;
+                        left: 3.3rem;
+                        font-size: 1rem;
+                        text-transform: uppercase;
+
+                        &.active {
+                            font-size: 1.2rem;
+                        }
+                    }
+                }
+            }
+
+            #lockedToggleWrapper {
+
+                #lockedToggle {
+                    label {
+                        padding-left: 0.5rem;
+                        font-size: 1rem;
+                    }
+                    /* img {
+                        width: 0.825rem;;
+                        height: 0.8rem;
+                    } */
+                    #toggleUnderline {
+
+                    }
+                }   
+            }
+        }
+
+
+        /* CHARACTERS */
+
+        #characterSection {
+            display: flex;
+            width: 66.5rem;
+            flex-wrap: wrap;
+            gap: 0.9rem;
+            overflow-y: auto;
+
+            .character {
+                width: 12.5rem;
+                height: 17.5rem;
+                background-color: green;
+                position: relative;
+
+                .portrait {
+                    /* ?? Try without setting anything */
+                }
+                
+                .foregroundLayer {}
+                
+                .textContainer{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    position: absolute;
+                    top: 15rem;
+                    width: 100%;
+
+                    .name {
+                        font-size: 1rem;
+                        /* margin-bottom: 1rem; */
+                        text-transform: uppercase;
+                    }
+            
+                    .level {
+                        font-size: 0.9rem;
+                    }
+                }
+                
+                .classIcon {
+                    width: 0.8rem;
+                    height: 0.8rem;
+                }
+            
+            }
+        }
+    }
+
+    .screenDivider {
+        position: absolute;
+    }
+
+    footer {
+        position:absolute;
+        bottom: 0;
+        background-color: blue;
+        height: 5rem;
+        width: 100%;
+    }
+}
+
+
+@media (min-width: 3160px) {
+	html {
+		font-size: 40px;
+	}
+}
