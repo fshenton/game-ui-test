@@ -1,7 +1,8 @@
 import { CHARACTERS } from "./data/characters";
 import { FILTERS } from "./data/filters";
+import type { AppState } from "./types";
 
-export function render(): void {
+export function render(state: AppState): void {
     const app = document.querySelector("#app");
 
     if(app) {
@@ -9,10 +10,9 @@ export function render(): void {
 
         app.appendChild(createHeading());
         app.appendChild(createScreenDivider());
-        app.appendChild(createMainContainer())
+        app.appendChild(createMainContainer(state))
         app.appendChild(createFooter());
     }
-
 }
 
 function createHeading(): HTMLDivElement {
@@ -35,16 +35,16 @@ function createScreenDivider(): HTMLImageElement {
     return screenDivider;
 }
 
-export function createMainContainer(): HTMLElement {
+export function createMainContainer(state: AppState): HTMLElement {
     const mainContainer = document.createElement("main");
 
-    mainContainer.appendChild(createControlSection());
-    mainContainer.appendChild(createCharacterSection());
+    mainContainer.appendChild(createControlSection(state));
+    mainContainer.appendChild(createCharacterSection(state));
 
     return mainContainer;
 }
 
-function createControlSection(): HTMLDivElement {
+function createControlSection(state: AppState): HTMLDivElement {
     const controlSection = document.createElement("div");
     controlSection.id = "controlSection";
 
@@ -54,7 +54,7 @@ function createControlSection(): HTMLDivElement {
     createFilters().forEach(filter => filterList.appendChild(filter));
 
     controlSection.appendChild(filterList);
-    controlSection.appendChild(createLockedToggle());
+    controlSection.appendChild(createLockedToggle(state));
 
     return controlSection;
 }
@@ -92,7 +92,7 @@ function createFilters(): HTMLLIElement[] {
     return filterElements;
 }
 
-function createLockedToggle(): HTMLDivElement {
+function createLockedToggle(state: AppState): HTMLDivElement {
     const lockedToggleWrapper = document.createElement("div");
     lockedToggleWrapper.id = "lockedToggleWrapper";
 
@@ -102,6 +102,7 @@ function createLockedToggle(): HTMLDivElement {
     const toggle = document.createElement("input");
     toggle.type = "checkbox";
     toggle.id = "lockedToggle";
+    toggle.checked = state.showLocked;
 
     const label = document.createElement("label");
     label.innerText = "Show locked";
@@ -118,18 +119,28 @@ function createLockedToggle(): HTMLDivElement {
     return lockedToggleWrapper;
 }
 
-function createCharacterSection(): HTMLDivElement {
+function createCharacterSection(state: AppState): HTMLDivElement {
     const characterSection = document.createElement("div");
     characterSection.id = "characterSection"
 
-    const characterPanels = createCharacterPanels();
+    const characterPanels = createCharacterPanels(state);
     characterPanels.forEach(panel => characterSection.appendChild(panel));
 
     return characterSection;
 }
 
-function createCharacterPanels(): HTMLDivElement[] {
-     const characterPanels = CHARACTERS.map((character) => {
+function createCharacterPanels(state: AppState): HTMLDivElement[] {
+    const { activeFilterId: filterClass, showLocked, lockedCharacterIds } = state;
+    const activeCharacters = CHARACTERS.filter((character) => {
+        let isActive = true;
+
+        if(!showLocked && lockedCharacterIds.includes(character.id)) isActive = false;
+        if(filterClass !== "all" && character.class !== filterClass) isActive = false;
+
+        return isActive;
+    });
+
+    const visibleCharacterPanels = activeCharacters.map((character) => {
         const { id, name, class: characterClass, level } = character;
 
         const panel = document.createElement("div");
@@ -174,7 +185,7 @@ function createCharacterPanels(): HTMLDivElement[] {
 
     })
 
-    return characterPanels;
+    return visibleCharacterPanels;
 }
 
 function createFooter(): HTMLElement {

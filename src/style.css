@@ -117,6 +117,7 @@ html {
             flex-wrap: wrap;
             gap: 0.9rem;
             overflow-y: auto;
+            /* TODO layout bug: gap widens if 2 rows visible (filter: all, hide locked) */
 
             .character {
                 width: 12.5rem;

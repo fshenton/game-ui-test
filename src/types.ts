@@ -1,22 +1,21 @@
-export type CharacterClass = "Assassin" | "Brawler" | "Support" | "Tank";
-export type FilterName = "All" | CharacterClass;
-
+export type CharacterClassId = "assassin" | "brawler" | "support" | "tank";
+export type FilterId = "all" | CharacterClassId;
 export interface Filter {
-    id: string,
-    name: FilterName,
+    id: FilterId,
+    name: string,
 }
 
 export interface Character {
     id: string,
     name: string,
-    class: CharacterClass,
+    class: CharacterClassId,
     level: number,
 }
 
 export interface AppState {
     showLocked: boolean;
     filters: Filter[];
-    activeFilterId: string;
+    activeFilterId: FilterId;
     characters: Character[];
     lockedCharacterIds: string[];
     activeCharacterId: string;
