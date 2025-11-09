@@ -1,7 +1,7 @@
 :root {
-    /* --font_family__body: 
-    --font_family__heading:  */
+
     /* --font_color: #cacbca; */
+
 }
 
 * {
@@ -22,27 +22,60 @@
 
 html {
     font-size: 20px;
+    font-family: Hybrid-Medium;
+    color: #d9cdc1;
 }
 
 #app {
-    background-color: grey;
+    position: relative;
+    background-image: url("/assets/images/static/Background.png");
+    background-size: cover;
     min-height: 100vh;
     padding-top: 5rem;
+    z-index: 0;
 
     #headingContainer {
+        position: relative;
         padding-left: 4rem;
         margin-bottom: 1.5rem;
         width: 18.5rem;
+        z-index: 1;
         h1 { 
             font-size: 2.5rem;
+            font-family: Quattrocento-Regular;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            position: relative;
+
+            &::before {
+                content: 'CHARACTERS';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: scaleY(-1);
+                opacity: 0.15;
+                pointer-events: none;
+                mask-image: linear-gradient(to top, rgb(0,0,0,1) 0%, rgb(0,0,0,0) 80%);
+            }
         }
     }
 
+    #screenDivider {
+        position: absolute;
+        top: 7.55rem;
+        left: 0.85rem;
+        width: 94.6rem;
+        height: 39.65rem;
+        z-index: 1;
+    }
+
     main { 
+        position: relative;
         padding-left: 4rem;
         display: flex;
         gap: 3.725rem;
-        height: 39.5rem;
+        height: 39.5rem; /* TODO ? give it more space if there is some, up to showing all three rows as max */
+        z-index: 2;
 
         /* CONTROLS */
         #controlSection {
@@ -69,43 +102,113 @@ html {
                         display: flex;
                         position: relative;
                         align-items: center;
-                        background-color: pink;
-                    }
-                    .icon {
-                        width: 1.6rem;
-                        height: 1.6rem;
-                        left: 1.375rem;
-                        position: relative;
-                    }
-                    .name {
-                        position: relative;
-                        left: 3.3rem;
-                        font-size: 1rem;
-                        text-transform: uppercase;
+                        background: transparent;
+                        border: none;
+                        cursor: pointer;
 
-                        &.active {
-                            font-size: 1.2rem;
+                        .bg {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+
+                            &.bg-normal {
+                                opacity: 1;
+                            }
+
+                            &.bg-active {
+                                opacity: 0;
+                            }
+
+                            &.bg-hovered {
+                                opacity: 0;
+                            }
                         }
-                    }
+
+                        &[data-is-active="true"] {
+                            .bg-normal {
+                                opacity: 0;
+                            }
+
+                            .bg-active {
+                                opacity: 1;
+                            }
+
+                            .bg-hovered {
+                                opacity: 0;
+                            }
+
+                            .name {
+                                font-size: 1.2rem;
+                            }
+                        }
+
+                        &[data-is-active="false"]:hover {
+                            .bg-hovered {
+                                opacity: 1;
+                            }
+
+                            .bg-normal {
+                                opacity: 0;
+                            }
+                        }
+
+                        .icon {
+                            left: 1.375rem;
+                            transform: translateX(-50%);
+                            position: relative;
+                        }
+
+                        .name {
+                            position: absolute;
+                            left: 3.3rem;
+                            font-size: 1rem;
+                            text-transform: uppercase;
+                            font-family: Hybrid-Medium;
+                            color: #d9cdc1;
+                            letter-spacing: 0.03em;
+                            font-weight: 400;
+                        }
+                    }   
                 }
             }
 
             #lockedToggleWrapper {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                position: relative;
 
                 #lockedToggle {
+                    cursor: pointer;
+                    appearance: none; 
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    border: none;
+                    padding: 0;
+                    background-image: url("/assets/images/controls/lockedToggle/checkbox_empty.png");
+
+                    &:checked {
+                        background-image: url("/assets/images/controls/lockedToggle/checkbox_filled.png");
+                    }
+
                     label {
                         padding-left: 0.5rem;
                         font-size: 1rem;
                     }
-                    /* img {
-                        width: 0.825rem;;
-                        height: 0.8rem;
-                    } */
-                    #toggleUnderline {
 
-                    }
-                }   
-            }
+                }
+
+                #toggleUnderline {
+                    position: absolute;
+                    top: 1.4rem;
+                    left: 1rem;
+                }
+            }   
         }
 
 
@@ -122,14 +225,65 @@ html {
             .character {
                 width: 12.5rem;
                 height: 17.5rem;
-                background-color: green;
                 position: relative;
+                cursor: pointer;
+                z-index: 0;
+                /* display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center; */
+                
+                .background {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 0;
+                    opacity: 0;
+
+                    &.bg-normal {
+                        opacity: 1;
+                    }
+
+                    &.bg-active {
+                        opacity: 0;
+                    }
+                }
 
                 .portrait {
-                    /* ?? Try without setting anything */
+                    position: relative;
+                    z-index: 1;
+                    /* width: 100%; */
+                    /* height: auto; */
+                    /* object-fit: cover; */
                 }
-                
-                .foregroundLayer {}
+   
+                .foreground {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 2;
+                    opacity: 0;
+
+                    &.fg-normal {
+                        opacity: 1;
+                    }
+
+                    &.fg-active {
+                        opacity: 0;
+                    }
+
+                    &.fg-normal-locked {
+                        opacity: 0;
+                    }
+
+                    &.fg-active-locked {
+                        opacity: 0;
+                    }
+                }
                 
                 .textContainer{
                     display: flex;
@@ -138,6 +292,7 @@ html {
                     position: absolute;
                     top: 15rem;
                     width: 100%;
+                    z-index: 3;
 
                     .name {
                         font-size: 1rem;
@@ -153,7 +308,68 @@ html {
                 .classIcon {
                     width: 0.8rem;
                     height: 0.8rem;
+                    position: absolute;
+                    bottom: 0.5rem;
+                    right: 0.5rem;
+                    z-index: 3;
                 }
+
+                &[data-active="true"][data-locked="false"] {
+                .bg-normal {
+                    opacity: 0;
+                }
+
+                .bg-active {
+                    opacity: 1;
+                }
+
+                .fg-normal {
+                    opacity: 0;
+                }
+
+                .fg-active {
+                    opacity: 1;
+                }
+            }
+
+            /* INACTIVE + LOCKED STATE */
+            &[data-active="false"][data-locked="true"] {
+                .fg-normal {
+                    opacity: 0;
+                }
+
+                .fg-normal-locked {
+                    opacity: 1;
+                }
+            }
+
+            /* ACTIVE + LOCKED STATE */
+            &[data-active="true"][data-locked="true"] {
+                .bg-normal {
+                    opacity: 0;
+                }
+
+                .bg-active {
+                    opacity: 1;
+                }
+
+                .fg-normal {
+                    opacity: 0;
+                }
+
+                .fg-normal-locked {
+                    opacity: 0;
+                }
+
+                .fg-active-locked {
+                    opacity: 1;
+                }
+            }
+
+            /* Hover effect */
+            &:hover:not([data-active="true"]) {
+                /* Add hover styling if desired */
+            }
             
             }
         }
@@ -165,8 +381,10 @@ html {
 
     footer {
         position:absolute;
+        background-image: url("/assets/images/static/Bottom_Bar.png");
+        background-color: transparent;
+        background-size: cover;
         bottom: 0;
-        background-color: blue;
         height: 5rem;
         width: 100%;
     }

@@ -29,8 +29,8 @@ function createHeading(): HTMLDivElement {
 
 function createScreenDivider(): HTMLImageElement {
     const screenDivider = document.createElement("img");
-    screenDivider.className = "screenDivider";
-    screenDivider.src = "./assets/images/screen layers/screen divider.png";
+    screenDivider.id = "screenDivider";
+    screenDivider.src = "/assets/images/static/ScreenDivider.png";
 
     return screenDivider;
 }
@@ -51,7 +51,7 @@ function createControlSection(state: AppState): HTMLDivElement {
     const filterList = document.createElement("ul");
     filterList.id = "filterList";
 
-    createFilters().forEach(filter => filterList.appendChild(filter));
+    createFilters(state).forEach(filter => filterList.appendChild(filter));
 
     controlSection.appendChild(filterList);
     controlSection.appendChild(createLockedToggle(state));
@@ -59,28 +59,42 @@ function createControlSection(state: AppState): HTMLDivElement {
     return controlSection;
 }
 
-function createFilters(): HTMLLIElement[] {
-    // Could hardcode the HTML as a template string to make it more readable at a glance but:
-    // 1) hard to debug & catch errors without syntax highlighting or type checking
-    // 2) lots of duplication & bloat as most of the HTML is the same for each filter
-    // 3) would need to update if we ever added more filters or changed existing ones, instead of simply editing the data file
-
+function createFilters(state: AppState): HTMLLIElement[] {
     const filterElements = FILTERS.map((filter) => {
         const { name, id } = filter;
         
         const listItem = document.createElement("li");
 
+        console.log('id :>> ', id);
+        console.log('state.activeFilterId :>> ', state.activeFilterId);
+
         const button = document.createElement("button");
         button.setAttribute("data-filter-id", id);
+        button.setAttribute("data-is-active", id === state.activeFilterId ? "true" : "false");
+
+        const activeBg = document.createElement("img");
+        activeBg.className = "bg bg-active";
+        activeBg.src = `/assets/images/controls/filters/button_active.png`;
+
+        const normalBg = document.createElement("img");
+        normalBg.className = "bg bg-normal";
+        normalBg.src = `/assets/images/controls/filters/button_normal.png`;
+
+        const hoveredBg = document.createElement("img");
+        hoveredBg.className = "bg bg-hovered";
+        hoveredBg.src = `/assets/images/controls/filters/button_hovered.png`;
 
         const icon = document.createElement("img");
         icon.className = "icon";
-        icon.src = `./assets/images/icons/${id}.png`;
+        icon.src = `/assets/images/icons/${id}.png`;
         
         const buttonLabel = document.createElement("div");
         buttonLabel.className = "name";
         buttonLabel.innerText = name;
 
+        button.appendChild(activeBg);
+        button.appendChild(normalBg);
+        button.appendChild(hoveredBg);
         button.appendChild(icon);
         button.appendChild(buttonLabel);
 
@@ -96,9 +110,6 @@ function createLockedToggle(state: AppState): HTMLDivElement {
     const lockedToggleWrapper = document.createElement("div");
     lockedToggleWrapper.id = "lockedToggleWrapper";
 
-    // TODO confirm that background-image transitions are ok to use, else include the img elements
-    // Either we have two images: one for locked and one for unlocked and we switch opacitys
-    // Or we have an empty div that we change the background-image for
     const toggle = document.createElement("input");
     toggle.type = "checkbox";
     toggle.id = "lockedToggle";
@@ -110,7 +121,7 @@ function createLockedToggle(state: AppState): HTMLDivElement {
 
     const underline = document.createElement("img");
     underline.id = "toggleUnderline";
-    underline.src = "./assets/images/toggle/underline.png";
+    underline.src = "/assets/images/controls/lockedToggle/underline.png";
 
     lockedToggleWrapper.appendChild(toggle);
     lockedToggleWrapper.appendChild(label);
@@ -141,21 +152,46 @@ function createCharacterPanels(state: AppState): HTMLDivElement[] {
     });
 
     const visibleCharacterPanels = activeCharacters.map((character) => {
-        const { id, name, class: characterClass, level } = character;
+        const { id, name, class: characterClass, level, portraitPath } = character;
+
+        const isActive = id === state.activeCharacterId;
+        const isLocked = state.lockedCharacterIds.includes(id);
 
         const panel = document.createElement("div");
         panel.className = "character";
         panel.setAttribute("data-character-id", id);
+        panel.setAttribute("data-active", isActive ? "true" : "false");
+        panel.setAttribute("data-locked", isLocked ? "true" : "false");
         panel.setAttribute("role", "button");
         panel.setAttribute("tabindex", "0");
 
         const charPortrait = document.createElement("img");
         charPortrait.className = "portrait"
-        charPortrait.src = `./assets/images/character/portraits/${id}.png`;
-        
-        const charFgLayer = document.createElement("img");
-        charFgLayer.className = "foregroundLayer";
-        charFgLayer.src = `./assets/images/character/fgInactive.png`; // TODO Active, Inactive, Locked, Unlocked depending on state
+        charPortrait.src = portraitPath;
+
+        const bgNormal = document.createElement("img");
+        bgNormal.className = "background bg-normal";
+        bgNormal.src = `/assets/images/characters/layers/bg_normal.png`;
+
+        const bgActive = document.createElement("img");
+        bgActive.className = "background bg-active";
+        bgActive.src = `/assets/images/characters/layers/bg_active.png`;
+
+        const fgNormal = document.createElement("img");
+        fgNormal.className = "foreground fg-normal";
+        fgNormal.src = `/assets/images/characters/layers/fg_normal.png`;
+
+        const fgActive = document.createElement("img");
+        fgActive.className = "foreground fg-active";
+        fgActive.src = `/assets/images/characters/layers/fg_active.png`;
+
+        const fgNormalLocked = document.createElement("img");
+        fgNormalLocked.className = "foreground fg-normal-locked";
+        fgNormalLocked.src = `/assets/images/characters/layers/fg_normal_locked.png`;
+
+        const fgActiveLocked = document.createElement("img");
+        fgActiveLocked.className = "foreground fg-active-locked";
+        fgActiveLocked.src = `/assets/images/characters/layers/fg_active_locked.png`;
 
         const textContainer = document.createElement("div");
         textContainer.className = "textContainer";
@@ -173,11 +209,15 @@ function createCharacterPanels(state: AppState): HTMLDivElement[] {
         
         const classIcon = document.createElement("img");
         classIcon.className = "classIcon";
-        classIcon.src = `./assets/images/icons/${characterClass}.png`;
-        // TODO confirm that background-image transitions are ok to use, else include the img elements
+        classIcon.src = `/assets/images/icons/${characterClass}.png`;
 
         panel.appendChild(charPortrait); 
-        panel.appendChild(charFgLayer);
+        panel.appendChild(bgNormal); 
+        panel.appendChild(bgActive); 
+        panel.appendChild(fgNormal);
+        panel.appendChild(fgActive);
+        panel.appendChild(fgNormalLocked);
+        panel.appendChild(fgActiveLocked);
         panel.appendChild(textContainer);
         panel.appendChild(classIcon);
 
@@ -189,8 +229,6 @@ function createCharacterPanels(state: AppState): HTMLDivElement[] {
 }
 
 function createFooter(): HTMLElement {
-    // TODO should just be background-image for this
-
     const footer = document.createElement("footer");
 
     return footer;

@@ -1,9 +1,10 @@
 import { CHARACTERS } from './data/characters';
 import { FILTERS } from './data/filters';
 import { initialiseState, setActiveCharacter, setActiveFilter, setShowLocked } from './state';
-import './style.css';
 import type { FilterId } from './types';
 import { render } from './ui';
+import './style.css';
+import './fonts.css';
  
 const validFilterIds = FILTERS.map(f => f.id);
 const validCharacterIds = CHARACTERS.map(c => c.id);
@@ -44,6 +45,7 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('change', (e) => {
   const target = e.target as HTMLInputElement;
+  // TODO currently triggers when you press anywhere within input area
   
   if (target.type === 'checkbox' && target.id === 'lockedToggle') {
     const isChecked = target.checked; // true or false

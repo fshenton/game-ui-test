@@ -10,6 +10,7 @@ export interface Character {
     name: string,
     class: CharacterClassId,
     level: number,
+    portraitPath: string,
 }
 
 export interface AppState {

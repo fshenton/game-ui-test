@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'Hybrid-Medium';
+  src: url('/assets/fonts/Hybrid-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hybrid-Medium';
+  src: url('/assets/fonts/Hybrid-Medium-Italic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Quattrocento-Regular';
+  src: url('/assets/fonts/Quattrocento-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
