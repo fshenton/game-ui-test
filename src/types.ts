@@ -21,5 +21,3 @@ export interface AppState {
     lockedCharacterIds: string[];
     activeCharacterId: string;
 }
-
-// TODO Any argument typing I need for functions etc.
