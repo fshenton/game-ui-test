@@ -167,6 +167,8 @@ html {
                             left: 1.375rem;
                             transform: translateX(-50%);
                             position: relative;
+                            width: 1.6rem;
+                            height: 1.6rem;
                         }
 
                         .name {
@@ -351,7 +353,7 @@ html {
                     height: 1.5rem;
                     position: absolute;
                     left: 50%;
-                    transform: translate3d(-50%, -55%, 0);
+                    transform: translate3d(-50%, -62%, 0);
                     z-index: 3;
                 }
 
@@ -424,6 +426,10 @@ html {
 @media (min-width: 3160px) {
 	html {
 		font-size: 40px;
+
+        .portrait {
+            transform: scale(2) translateY(-26%);
+        }
 	}
 }
 
