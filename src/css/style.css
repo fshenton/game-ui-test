@@ -206,6 +206,11 @@ html {
                     border: none;
                     padding: 0;
                     background-image: url("/assets/images/controls/lockedToggle/checkbox_empty.png");
+                    transform: scale(1);
+
+                    &:hover {
+                        transform: scale(1.1);
+                    }
 
                     &:checked {
                         background-image: url("/assets/images/controls/lockedToggle/checkbox_filled.png");
