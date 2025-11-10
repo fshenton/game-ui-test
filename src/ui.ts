@@ -165,9 +165,14 @@ function createCharacterPanels(state: AppState): HTMLDivElement[] {
         panel.setAttribute("role", "button");
         panel.setAttribute("tabindex", "0");
 
+        const portraitWrapper = document.createElement("div");
+        portraitWrapper.className = "portraitWrapper";
+
         const charPortrait = document.createElement("img");
         charPortrait.className = "portrait"
         charPortrait.src = portraitPath;
+
+        portraitWrapper.appendChild(charPortrait)
 
         const bgNormal = document.createElement("img");
         bgNormal.className = "background bg-normal";
@@ -202,7 +207,7 @@ function createCharacterPanels(state: AppState): HTMLDivElement[] {
 
         const charLevel = document.createElement("div");
         charLevel.className = "level"
-        charLevel.innerText = `${level}/ 15`;
+        charLevel.innerText = `${level}/15`;
 
         textContainer.appendChild(charName);
         textContainer.appendChild(charLevel);
@@ -211,7 +216,7 @@ function createCharacterPanels(state: AppState): HTMLDivElement[] {
         classIcon.className = "classIcon";
         classIcon.src = `/assets/images/icons/${characterClass}.png`;
 
-        panel.appendChild(charPortrait); 
+        panel.appendChild(portraitWrapper); 
         panel.appendChild(bgNormal); 
         panel.appendChild(bgActive); 
         panel.appendChild(fgNormal);

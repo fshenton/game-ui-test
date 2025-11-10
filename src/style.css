@@ -21,7 +21,7 @@
 }
 
 html {
-    font-size: 20px;
+    font-size: 20px; 
     font-family: Hybrid-Medium;
     color: #d9cdc1;
 }
@@ -220,7 +220,10 @@ html {
             flex-wrap: wrap;
             gap: 0.9rem;
             overflow-y: auto;
+            mask-image: linear-gradient(to bottom, rgb(0,0,0,1) 95%, rgb(0,0,0,0) 100%);
+
             /* TODO layout bug: gap widens if 2 rows visible (filter: all, hide locked) */
+            /* Selecting item in third row, screen scrolls back to top, hiding selected char */
 
             .character {
                 width: 12.5rem;
@@ -232,6 +235,10 @@ html {
                 flex-direction: column;
                 align-items: center;
                 justify-content: center; */
+
+                &[data-locked="true"] {
+                    opacity: 0.8;
+                }
                 
                 .background {
                     position: absolute;
@@ -251,20 +258,29 @@ html {
                     }
                 }
 
+                .portraitWrapper {
+                    display: flex;
+                    position: relative;
+                    top: 0.25rem;
+                    left: 0.25rem;
+                    width: 12rem;
+                    height: 13.5rem;
+                    justify-content: center;
+                    align-items: flex-end;
+                }
+
                 .portrait {
                     position: relative;
                     z-index: 1;
-                    /* width: 100%; */
-                    /* height: auto; */
-                    /* object-fit: cover; */
+                    mask-image: linear-gradient(to bottom, rgb(0,0,0,1) 80%, rgb(0,0,0,0) 100%);
                 }
    
                 .foreground {
                     position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
+                    top: 0.25rem;
+                    left: 0.25rem;
+                    width: 12rem;
+                    height: 17rem;
                     z-index: 2;
                     opacity: 0;
 
@@ -290,27 +306,30 @@ html {
                     flex-direction: column;
                     align-items: center;
                     position: absolute;
-                    top: 15rem;
+                    top: 14.5rem;
                     width: 100%;
                     z-index: 3;
 
                     .name {
                         font-size: 1rem;
                         /* margin-bottom: 1rem; */
+                        letter-spacing: 0.03;
                         text-transform: uppercase;
                     }
             
                     .level {
+                        font-style: italic;
                         font-size: 0.9rem;
+                        letter-spacing: 0.05em;
                     }
                 }
                 
                 .classIcon {
-                    width: 0.8rem;
-                    height: 0.8rem;
+                    width: 1.5rem;
+                    height: 1.5rem;
                     position: absolute;
-                    bottom: 0.5rem;
-                    right: 0.5rem;
+                    left: 50%;
+                    transform: translate3d(-50%, -55%, 0);
                     z-index: 3;
                 }
 

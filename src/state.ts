@@ -12,7 +12,7 @@ export function initialiseState(): AppState {
         activeFilterId: "all",
         showLocked: true,
         characters: CHARACTERS,
-        lockedCharacterIds: ["djura", "maria", "oldhunter"],
+        lockedCharacterIds: ["djura", "maria", "oldhunter", "pierce"],
         activeCharacterId: "adrian"
     };
 }
