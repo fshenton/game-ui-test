@@ -231,10 +231,23 @@ html {
                 position: relative;
                 cursor: pointer;
                 z-index: 0;
-                /* display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center; */
+                transform: scale(0.95);
+                transition: transform 0.3s ease, filter 0.3s ease;
+                will-change: transform;
+                backface-visibility: hidden;
+                -webkit-font-smoothing: antialiased;
+
+                .portrait,
+                .background,
+                .foreground,
+                .textContainer {
+                    backface-visibility: hidden;
+                }
+
+                &:hover, &[data-active="true"] {
+                    transform: scale(1);
+                    filter: brightness(1.1) contrast(1.1);
+                }
 
                 &[data-locked="true"] {
                     opacity: 0.8;
@@ -312,7 +325,6 @@ html {
 
                     .name {
                         font-size: 1rem;
-                        /* margin-bottom: 1rem; */
                         letter-spacing: 0.03;
                         text-transform: uppercase;
                     }
@@ -334,61 +346,54 @@ html {
                 }
 
                 &[data-active="true"][data-locked="false"] {
-                .bg-normal {
-                    opacity: 0;
+                    .bg-normal {
+                        opacity: 0;
+                    }
+
+                    .bg-active {
+                        opacity: 1;
+                    }
+
+                    .fg-normal {
+                        opacity: 0;
+                    }
+
+                    .fg-active {
+                        opacity: 1;
+                    }
                 }
 
-                .bg-active {
-                    opacity: 1;
+                &[data-active="false"][data-locked="true"] {
+                    .fg-normal {
+                        opacity: 0;
+                    }
+
+                    .fg-normal-locked {
+                        opacity: 1;
+                    }
                 }
 
-                .fg-normal {
-                    opacity: 0;
-                }
+                &[data-active="true"][data-locked="true"] {
+                    .bg-normal {
+                        opacity: 0;
+                    }
 
-                .fg-active {
-                    opacity: 1;
-                }
-            }
+                    .bg-active {
+                        opacity: 1;
+                    }
 
-            /* INACTIVE + LOCKED STATE */
-            &[data-active="false"][data-locked="true"] {
-                .fg-normal {
-                    opacity: 0;
-                }
+                    .fg-normal {
+                        opacity: 0;
+                    }
 
-                .fg-normal-locked {
-                    opacity: 1;
-                }
-            }
+                    .fg-normal-locked {
+                        opacity: 0;
+                    }
 
-            /* ACTIVE + LOCKED STATE */
-            &[data-active="true"][data-locked="true"] {
-                .bg-normal {
-                    opacity: 0;
+                    .fg-active-locked {
+                        opacity: 1;
+                    }
                 }
-
-                .bg-active {
-                    opacity: 1;
-                }
-
-                .fg-normal {
-                    opacity: 0;
-                }
-
-                .fg-normal-locked {
-                    opacity: 0;
-                }
-
-                .fg-active-locked {
-                    opacity: 1;
-                }
-            }
-
-            /* Hover effect */
-            &:hover:not([data-active="true"]) {
-                /* Add hover styling if desired */
-            }
             
             }
         }
