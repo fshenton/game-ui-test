@@ -34,6 +34,8 @@ html {
         margin-bottom: 1.5rem;
         width: 18.5rem;
         z-index: 1;
+
+        /* HEADING */
         h1 { 
             font-size: 2.5rem;
             font-family: Quattrocento-Regular;
@@ -105,6 +107,7 @@ html {
                         margin-top: 0.8rem;
                     }
 
+                    /* FILTER BUTTON */
                     button {
                         width: 100%;
                         height: 100%;
@@ -185,6 +188,7 @@ html {
                 }
             }
 
+            /* LOCKED TOGGLE */
             #lockedToggleWrapper {
                 display: flex;
                 align-items: center;

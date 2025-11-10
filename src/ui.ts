@@ -4,6 +4,7 @@ import type { AppState } from "./types";
 
 let isInitialRender = true;
 
+/* RENDER */
 export function render(state: AppState): void {
     const app = document.querySelector("#app");
 
@@ -19,6 +20,7 @@ export function render(state: AppState): void {
     }
 }
 
+/* HEADING */
 function createHeading(shouldAnimate: boolean): HTMLDivElement {
     const headingContainer = document.createElement("div");
     headingContainer.id = "headingContainer";
@@ -35,6 +37,7 @@ function createHeading(shouldAnimate: boolean): HTMLDivElement {
     return headingContainer;
 }
 
+/* SCREEN DIVIDER */
 function createScreenDivider(shouldAnimate: boolean): HTMLImageElement {
     const screenDivider = document.createElement("img");
     screenDivider.id = "screenDivider";
@@ -47,6 +50,7 @@ function createScreenDivider(shouldAnimate: boolean): HTMLImageElement {
     return screenDivider;
 }
 
+/* MAIN CONTAINER */
 export function createMainContainer(state: AppState, shouldAnimate: boolean): HTMLElement {
     const mainContainer = document.createElement("main");
 
@@ -56,6 +60,7 @@ export function createMainContainer(state: AppState, shouldAnimate: boolean): HT
     return mainContainer;
 }
 
+/* CONTROLS */
 function createControlSection(state: AppState, shouldAnimate: boolean): HTMLDivElement {
     const controlSection = document.createElement("div");
     controlSection.id = "controlSection";
@@ -75,6 +80,7 @@ function createControlSection(state: AppState, shouldAnimate: boolean): HTMLDivE
     return controlSection;
 }
 
+/* FILTERS */
 function createFilters(state: AppState): HTMLLIElement[] {
     const filterElements = FILTERS.map((filter) => {
         const { name, id } = filter;
@@ -122,6 +128,7 @@ function createFilters(state: AppState): HTMLLIElement[] {
     return filterElements;
 }
 
+/* LOCKED TOGGLE */
 function createLockedToggle(state: AppState): HTMLDivElement {
     const lockedToggleWrapper = document.createElement("div");
     lockedToggleWrapper.id = "lockedToggleWrapper";
@@ -146,6 +153,7 @@ function createLockedToggle(state: AppState): HTMLDivElement {
     return lockedToggleWrapper;
 }
 
+/* CHARACTER GRID */
 function createCharacterSection(state: AppState, shouldAnimate: boolean): HTMLDivElement {
     const characterSection = document.createElement("div");
     characterSection.id = "characterSection"
@@ -160,6 +168,7 @@ function createCharacterSection(state: AppState, shouldAnimate: boolean): HTMLDi
     return characterSection;
 }
 
+/* CHARACTER PANELS */
 function createCharacterPanels(state: AppState): HTMLDivElement[] {
     const { activeFilterId: filterClass, showLocked, lockedCharacterIds } = state;
     const activeCharacters = CHARACTERS.filter((character) => {
@@ -253,6 +262,7 @@ function createCharacterPanels(state: AppState): HTMLDivElement[] {
     return visibleCharacterPanels;
 }
 
+/* FOOTER */
 function createFooter(): HTMLElement {
     const footer = document.createElement("footer");
 

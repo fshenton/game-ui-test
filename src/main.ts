@@ -13,6 +13,7 @@ let state = initialiseState();
 
 render(state);
 
+/* FILTER AND CHARACTER CLICK LISTENERS */
 document.addEventListener('click', (e) => {
   const target = e.target as HTMLElement;
 
@@ -43,6 +44,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
+/* LOCKED TOGGLE LISTENER */
 document.addEventListener('change', (e) => {
   const target = e.target as HTMLInputElement;
   
@@ -53,6 +55,7 @@ document.addEventListener('change', (e) => {
   }
 });
 
+/* UTILS */
 function isValidFilterId(value: string): value is FilterId {
   return (validFilterIds as string[]).includes(value);
 }
