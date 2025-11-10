@@ -2,51 +2,67 @@ import { CHARACTERS } from "./data/characters";
 import { FILTERS } from "./data/filters";
 import type { AppState } from "./types";
 
+let isInitialRender = true;
+
 export function render(state: AppState): void {
     const app = document.querySelector("#app");
 
     if(app) {
         app.innerHTML = "";
 
-        app.appendChild(createHeading());
-        app.appendChild(createScreenDivider());
-        app.appendChild(createMainContainer(state))
+        app.appendChild(createHeading(isInitialRender));
+        app.appendChild(createScreenDivider(isInitialRender));
+        app.appendChild(createMainContainer(state, isInitialRender))
         app.appendChild(createFooter());
+
+        isInitialRender = false;
     }
 }
 
-function createHeading(): HTMLDivElement {
+function createHeading(shouldAnimate: boolean): HTMLDivElement {
     const headingContainer = document.createElement("div");
     headingContainer.id = "headingContainer";
 
     const heading = document.createElement("h1"); 
     heading.innerText = "CHARACTERS";
 
+    if (shouldAnimate) {
+        heading.classList.add('animate-fade-in');
+    }
+
     headingContainer.appendChild(heading);
 
     return headingContainer;
 }
 
-function createScreenDivider(): HTMLImageElement {
+function createScreenDivider(shouldAnimate: boolean): HTMLImageElement {
     const screenDivider = document.createElement("img");
     screenDivider.id = "screenDivider";
     screenDivider.src = "/assets/images/static/ScreenDivider.png";
 
+    if (shouldAnimate) {
+        screenDivider.classList.add('animate-fade-in');
+    }
+
     return screenDivider;
 }
 
-export function createMainContainer(state: AppState): HTMLElement {
+export function createMainContainer(state: AppState, shouldAnimate: boolean): HTMLElement {
     const mainContainer = document.createElement("main");
 
-    mainContainer.appendChild(createControlSection(state));
-    mainContainer.appendChild(createCharacterSection(state));
+    mainContainer.appendChild(createControlSection(state, shouldAnimate));
+    mainContainer.appendChild(createCharacterSection(state, shouldAnimate));
 
     return mainContainer;
 }
 
-function createControlSection(state: AppState): HTMLDivElement {
+function createControlSection(state: AppState, shouldAnimate: boolean): HTMLDivElement {
     const controlSection = document.createElement("div");
     controlSection.id = "controlSection";
+
+    if (shouldAnimate) {
+        controlSection.classList.add('animate-fade-in');
+    }
 
     const filterList = document.createElement("ul");
     filterList.id = "filterList";
@@ -130,9 +146,13 @@ function createLockedToggle(state: AppState): HTMLDivElement {
     return lockedToggleWrapper;
 }
 
-function createCharacterSection(state: AppState): HTMLDivElement {
+function createCharacterSection(state: AppState, shouldAnimate: boolean): HTMLDivElement {
     const characterSection = document.createElement("div");
     characterSection.id = "characterSection"
+
+    if (shouldAnimate) {
+        characterSection.classList.add('animate-fade-in');
+    }
 
     const characterPanels = createCharacterPanels(state);
     characterPanels.forEach(panel => characterSection.appendChild(panel));
