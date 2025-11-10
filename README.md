@@ -32,10 +32,12 @@ npm install
 npm run dev
 ```
 
+Use browser dev tools to simulate device with 1080p and 4K resolutions.
+
 ## Areas of Learning & Improvement
 What did you learn?
-- Mainly I re-learned how to create vanilla TS apps, after 5+ years of working with React!
-- Learned a lot about using Claude as a collaborator on a project like this
+- Refreshed on creating and structuring vanilla TS apps, after 5+ years of working with React
+- Learned a lot about using Claude as a collaborator on a UI dev project like this
 
 What could be improved with more time?
 - Exact sizing/positioning for assets including character portraits & class icons
